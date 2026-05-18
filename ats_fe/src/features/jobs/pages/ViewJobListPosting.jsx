@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 import jobService from "../services/job.service";
+import JobCard from "../components/JobCard";
 
 const ViewJobListPosting = () => {
- 
-    // React Hooks
+  // React Hooks
   const [jobs, setJobs] = useState([]); // [], null, undefined, 0, false, ''
-
 
   // Mounting --> Call API to get all job postings
   // Param 1: callback function to execute
@@ -14,8 +13,8 @@ const ViewJobListPosting = () => {
     async function fetchData() {
       // Call service to get all job postings
       const response = await jobService.findAll();
-    console.log(response);
-    
+      console.log(response);
+
       // Change state
       setJobs(response);
       // ...
@@ -23,11 +22,17 @@ const ViewJobListPosting = () => {
     fetchData();
   }, []);
 
-
   return (
-    <div className="container-fluid">
+    <div className="container" style={{ height: "100vh" }}>
       <h3 className="my-3">Open Positions</h3>
-
+      <div
+        className="row d-flex justify-content-start align-items-start">
+        {jobs.map((job) => (
+          <div className="col-md-6 g-3 my-3" key={job.id}>
+            <JobCard job={job} />
+          </div>
+        ))}
+      </div>
       <div className="row d-flex justify-content-start align-items-start"></div>
     </div>
   );

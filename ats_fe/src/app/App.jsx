@@ -2,14 +2,18 @@ import react from 'react';
 import ListPlayer from '../demo-class-component/ListPlayer';
 import JobCard from '../features/jobs/components/JobCard';
 import ViewJobListPosting from '../features/jobs/pages/ViewJobListPosting';
+import HeroSection from '../shared/components/HeroSection';
 
 function App({ data }) {
   // Logic
 
   // UI
   return (
-
-   <ViewJobListPosting />
+    <>
+    <HeroSection />
+    <ViewJobListPosting />
+    </>
+    
   );
   //     <div className="container-fluid">
   //       <div className="row d-flex justify-content-center align-items-center mb-5" style={{ height: "100vh" }}>
