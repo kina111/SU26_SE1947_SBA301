@@ -22,6 +22,17 @@ const ViewJobListPosting = () => {
     fetchData();
   }, []);
 
+  const addToMyFavourite = async (job) => {
+    // Implementation for adding job to favourites
+
+    console.log("Adding job to favourites:", job);
+
+    job.numberOfApplicants += 1; // Update UI immediately
+    job.numberOfFavourites += 1; // Update UI immediately
+
+    await jobService.addToMyFavourite(job.id);
+  }
+
   return (
     <div className="container" style={{ height: "100vh" }}>
       <h3 className="my-3">Open Positions</h3>
@@ -29,7 +40,7 @@ const ViewJobListPosting = () => {
         className="row d-flex justify-content-start align-items-start">
         {jobs.map((job) => (
           <div className="col-md-6 g-3 my-3" key={job.id}>
-            <JobCard job={job} />
+            <JobCard job={job} addToMyFavourite={addToMyFavourite} />
           </div>
         ))}
       </div>

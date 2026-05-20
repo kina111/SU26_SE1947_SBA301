@@ -1,17 +1,17 @@
 import react from 'react';
-import ListPlayer from '../demo-class-component/ListPlayer';
-import JobCard from '../features/jobs/components/JobCard';
-import ViewJobListPosting from '../features/jobs/pages/ViewJobListPosting';
-import HeroSection from '../shared/components/HeroSection';
+import ViewJobListPage from '../features/jobs/pages/ViewJobListPage';
+import CandidateLogin from '../features/auth/pages/CandidateLogin';
 
-function App({ data }) {
+function App() {
   // Logic
 
   // UI
   return (
     <>
-    <HeroSection />
-    <ViewJobListPosting />
+    {/* <ViewJobListPage /> */}
+    <div className="d-flex justify-content-center align-items-center" style={{ height: "100vh" }}>
+      <CandidateLogin />
+    </div>
     </>
     
   );
