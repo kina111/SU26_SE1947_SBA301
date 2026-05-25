@@ -1,72 +1,91 @@
-import React from 'react';
-import { HeartFill } from 'react-bootstrap-icons';
-import jobService from '../services/job.service';
-const JobCard = ({ job, addToMyFavourite }) => {
-  const [numberOfApplicants, setNumberOfApplicants] = React.useState(job.numberOfApplicants);
-  const [numberOfFavourites, setNumberOfFavourites] = React.useState(job.numberOfFavourites);
-  // Logic
-  // Call API, create function for eventd handlers, etc.
+import React from "react";
+import { GeoAlt, Clock } from "react-bootstrap-icons";
 
-  // UI 
+const categoryStyles = {
+  Engineering: { border: "#4f46e5", bg: "#dbeafe", color: "#2563eb" },
+  Design: { border: "#7c3aed", bg: "#ede9fe", color: "#7c3aed" },
+  "Product Management": { border: "#db2777", bg: "#fce7f3", color: "#db2777" },
+  Marketing: { border: "#ea580c", bg: "#ffedd5", color: "#ea580c" },
+  Analytics: { border: "#0d9488", bg: "#ccfbf1", color: "#0d9488" },
+  "Data Science": { border: "#0d9488", bg: "#ccfbf1", color: "#0d9488" },
+};
+const defaultStyle = { border: "#4f46e5", bg: "#dbeafe", color: "#2563eb" };
 
-
-  const addToMyFavourite2 = async (job) => {
-    // Implementation for adding job to favourites
-    setNumberOfFavourites(numberOfFavourites + 1); // Update UI immediately
-
-    await jobService.addToMyFavourite(job.id);
-  }
+const JobCard = ({ job }) => {
+  const style = categoryStyles[job.category] || defaultStyle;
+  const shortDesc =
+    job.description?.length > 110
+      ? job.description.slice(0, 110) + "..."
+      : job.description;
 
   return (
-    <div className="card rounded border-start border-5 border-info border-0 shadow pb-3 px-3" style={{ width: "90%" }, { height: "480px" }}>
-      <div className="card-body">
-        <h3 className="card-title">{job.title}</h3>
-        <h6 className="card-subtitle mb-2 text-muted">{job.location}</h6>
-        <p className="card-text">
-          {job.description}
-        </p>
-        <a href="#" className="card-link">
-          Card link
-        </a>
-        <a href="#" className="card-link">
-          Another link
-        </a>
-        <p className="card-text">
-          <strong>Skills:</strong> {job.skills.join(", ")}
-        </p>
-        <p className="card-text">
-          <strong>Employment Type:</strong> {job.employmentType}
-        </p>
-        <p className="card-text">
-          <strong>Salary:</strong> {job.salary}
-        </p>
-        <div className='d-flex justify-content-between align-items-center'>
+    <div
+      className="card shadow-sm h-100"
+      style={{
+        border: "1px solid #e2e8f0",
+        borderLeft: `6px solid ${style.border}`,
+        borderRadius: 12,
+        overflow: "hidden",
+      }}
+    >
+      <div className="card-body p-4 d-flex flex-column">
+        <span
+          className="badge align-self-start mb-3 px-2 py-1"
+          style={{
+            backgroundColor: style.bg,
+            color: style.color,
+            fontWeight: 700,
+            fontSize: 11,
+          }}
+        >
+          {job.category?.toUpperCase()}
+        </span>
 
-          <p className="card-text">
-            <strong>Number of Applicants: {numberOfApplicants}</strong>
-          </p>
+        <h5 className="fw-bold mb-3 text-dark">{job.title}</h5>
 
-          <p className="card-text">
-            <strong>Number of Favourites: {numberOfFavourites}</strong>
-          </p>
-
+        <div className="d-flex align-items-center flex-wrap gap-3 mb-3 small text-secondary">
+          <span>
+            <GeoAlt className="me-1" /> {job.location}
+          </span>
+          <span>
+            <Clock className="me-1" /> Posted recently
+          </span>
+          <span
+            className="badge rounded-pill"
+            style={{
+              backgroundColor: "white",
+              border: "1.2px solid #059669",
+              color: "#059669",
+              fontWeight: 600,
+            }}
+          >
+            {job.employmentType}
+          </span>
         </div>
 
-      </div>
+        <p className="text-secondary small mb-3">{shortDesc}</p>
 
-      <hr />
-      <div className="d-flex justify-content-between align-items-center px-3">
+        <div className="d-flex flex-wrap gap-2 mb-3">
+          {job.skills?.map((s) => (
+            <span
+              key={s}
+              className="badge fw-normal"
+              style={{ backgroundColor: "#f1f5f9", color: "#475569" }}
+            >
+              {s}
+            </span>
+          ))}
+        </div>
 
-        <a href="#" className="text-decoration-none text-info fw-bold">
-          View Details
+        <hr className="my-2" style={{ borderColor: "#f1f5f9" }} />
+
+        <a
+          href="#"
+          className="text-decoration-none fw-semibold mt-2"
+          style={{ color: "#4f46e5" }}
+        >
+          View Details →
         </a>
-
-        <a href="#" className={`btn btn-info text-white fw-bold ${numberOfApplicants>0?'disabled':''}`} onClick={() => { setNumberOfApplicants(numberOfApplicants + 1) }}>
-          Apply Now
-        </a>
-
-        <HeartFill style={{ color: "red" }} onClick={() => addToMyFavourite2(job)} />
-
       </div>
     </div>
   );

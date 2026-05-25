@@ -1,6 +1,7 @@
 import React from 'react';
 
-const HeroSection = () => {
+const HeroSection = ({setKeyword}) => {
+
     return (
         <div
             className="position-relative text-white pt-3 py-2 overflow-hidden"
@@ -17,6 +18,7 @@ const HeroSection = () => {
                             type="text"
                             className="form-control border-0 bg-transparent p-2 text-dark shadow-none"
                             placeholder="Search by job title, skill or keyword..."
+                            onChange={(e) => setKeyword(e.target.value)}
                         />
                     </div>
                     <button className="btn rounded-pill px-4 py-2 text-white fw-medium" style={{ backgroundColor: '#4A3AFF' }}>Search</button>

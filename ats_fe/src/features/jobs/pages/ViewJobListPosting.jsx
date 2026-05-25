@@ -1,50 +1,57 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import jobService from "../services/job.service";
 import JobCard from "../components/JobCard";
 
-const ViewJobListPosting = () => {
-  // React Hooks
-  const [jobs, setJobs] = useState([]); // [], null, undefined, 0, false, ''
-
-  // Mounting --> Call API to get all job postings
-  // Param 1: callback function to execute
-  // Param 2: [] --> only execute callback function when component is mounted (first time render)
-  useEffect(() => {
-    async function fetchData() {
-      // Call service to get all job postings
-      const response = await jobService.findAll();
-      console.log(response);
-
-      // Change state
-      setJobs(response);
-      // ...
-    }
-    fetchData();
-  }, []);
-
+const ViewJobListPosting = ({ jobs }) => {
   const addToMyFavourite = async (job) => {
-    // Implementation for adding job to favourites
-
-    console.log("Adding job to favourites:", job);
-
-    job.numberOfApplicants += 1; // Update UI immediately
-    job.numberOfFavourites += 1; // Update UI immediately
-
+    job.numberOfApplicants += 1;
+    job.numberOfFavourites += 1;
     await jobService.addToMyFavourite(job.id);
-  }
+  };
 
   return (
-    <div className="container" style={{ height: "100vh" }}>
-      <h3 className="my-3">Open Positions</h3>
-      <div
-        className="row d-flex justify-content-start align-items-start">
+    <div className="container py-4">
+      <div className="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-4">
+        <div className="d-flex align-items-center gap-2">
+          <h3 className="m-0 fw-bold text-dark">Open Positions</h3>
+          <span
+            className="badge rounded-pill px-3 py-2"
+            style={{
+              backgroundColor: "#eef2ff",
+              color: "#4f46e5",
+              border: "1px solid #c7d2fe",
+              fontWeight: 600,
+            }}
+          >
+            {jobs.length} openings
+          </span>
+        </div>
+        <select className="form-select w-auto" defaultValue="recent">
+          <option value="recent">Sort by: Most Recent</option>
+          <option value="oldest">Sort by: Oldest</option>
+        </select>
+      </div>
+
+      <div className="row g-4">
         {jobs.map((job) => (
-          <div className="col-md-6 g-3 my-3" key={job.id}>
+          <div className="col-md-6" key={job.id}>
             <JobCard job={job} addToMyFavourite={addToMyFavourite} />
           </div>
         ))}
       </div>
-      <div className="row d-flex justify-content-start align-items-start"></div>
+
+      <div className="d-flex justify-content-center my-5">
+        <button
+          className="btn rounded-pill px-4 py-2 fw-semibold"
+          style={{
+            backgroundColor: "white",
+            border: "1.5px solid #4f46e5",
+            color: "#4f46e5",
+          }}
+        >
+          Load More Jobs
+        </button>
+      </div>
     </div>
   );
 };
