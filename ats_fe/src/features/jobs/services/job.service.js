@@ -193,6 +193,28 @@ const jobs = [
     }
 ];
 
+const departments = [
+    {id: 1, name: "Engineering"},
+    {id: 2, name: "Design"},
+    {id: 3, name: "Product Management"},
+    {id: 4, name: "Marketing"},
+    {id: 5, name: "Analytics"},
+];
+
+const locations = [
+    "Ho Chi Minh City, Vietnam",
+    "Ha Noi, Vietnam",
+    "Da Nang, Vietnam",
+    "Remote"
+];
+
+const jobTypes = [
+    "Full-time",
+    "Part-time",
+    "Contract",
+    "Internship"
+];
+
 const jobService = {
     findAll: async () => {
         return jobs;
@@ -207,6 +229,15 @@ const jobService = {
     viewMyFavourite: async () => {
         const ids = JSON.parse(localStorage.getItem("favouriteJobs") || "[]");
         return jobs.filter((j) => ids.includes(j.id));
+    },
+    getDepartments: async () => {
+        return departments;
+    },
+    getLocations: async () => {
+        return locations;
+    },
+    getJobTypes: async () => {
+        return jobTypes;
     }
 };
 

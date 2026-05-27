@@ -1,5 +1,6 @@
 import React from "react";
 import { GeoAlt, Clock } from "react-bootstrap-icons";
+import { Link } from "react-router-dom";
 
 const categoryStyles = {
   Engineering: { border: "#4f46e5", bg: "#dbeafe", color: "#2563eb" },
@@ -79,13 +80,13 @@ const JobCard = ({ job }) => {
 
         <hr className="my-2" style={{ borderColor: "#f1f5f9" }} />
 
-        <a
-          href="#"
+        <Link
+          to={`/careers/job/${job.id}`}
           className="text-decoration-none fw-semibold mt-2"
           style={{ color: "#4f46e5" }}
         >
           View Details →
-        </a>
+        </Link>
       </div>
     </div>
   );

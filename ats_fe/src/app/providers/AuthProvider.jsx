@@ -1,22 +1,36 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const AuthContext = createContext();
 
-
 export const AuthProvider = ({ children }) => {
-    // Logic for authentication (e.g., login, logout, check auth status)
-    const [user, setUser] = useState(null);
+  // Logic for authentication (e.g., login, logout, check auth status)
+  const [user, setUser] = useState(null);
 
-    const login = (response) => {
-        setUser(response);
-        localStorage.setItem("user", JSON.stringify(response)); // Store user data in localStorage
+  useEffect(() => {
+    // Check if user data exists in localStorage on component mount
+
+    function checkAuthStatus() {
+      const userData = localStorage.getItem("user");
+
+      // Reset to context
+      if (userData) {
+        setUser(JSON.parse(userData)); // Set user state from localStorage
+      }
     }
 
-    const dataContext = { user };
-    const actionContext = { login };
-    return (
-        <AuthContext.Provider value={{ ...dataContext, ...actionContext }}>
-            {children}
-        </AuthContext.Provider>
-    );
+    checkAuthStatus();
+  }, []);
+
+  const login = (response) => {
+    setUser(response);
+    localStorage.setItem("user", JSON.stringify(response)); // Store user data in localStorage
+  };
+
+  const dataContext = { user };
+  const actionContext = { login };
+  return (
+    <AuthContext.Provider value={{ ...dataContext, ...actionContext }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
