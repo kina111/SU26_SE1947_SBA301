@@ -39,7 +39,7 @@ public class User extends BaseEntity {
     @Column(columnDefinition = "VARCHAR(50)")
     private String status;
 
-    @ManyToOne
+    @ManyToOne(fetch =  FetchType.LAZY)
     @JoinColumn(name = "department_id", referencedColumnName = "id")
     private Department department;
 

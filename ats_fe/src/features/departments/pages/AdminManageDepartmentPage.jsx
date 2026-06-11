@@ -8,7 +8,6 @@ import {
   Modal,
   Table,
 } from "react-bootstrap";
-import jobService from "../../jobs/services/job.service";
 import DepartmentLogo from "../components/DepartmentLogo";
 import { useForm } from "react-hook-form";
 import departmentService from "../services/department.service";
@@ -37,7 +36,7 @@ const AdminManageDepartmentPage = () => {
   });
 
   function fetchDepartments() {
-    jobService
+    departmentService
       .getDepartments()
       .then((response) => {
         if (!response.ok) {

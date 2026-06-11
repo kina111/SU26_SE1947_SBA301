@@ -1,6 +1,9 @@
 import axiosClient from "../../../shared/services/axiosClient";
 
 const departmentService = {
+    getDepartments: async () => {
+        return axiosClient.get("/api/v1/departments");
+    },
     createDepartment: async (departmentData) => {
         const response = await fetch("http://localhost:8080/departments", {
             method: "POST",
